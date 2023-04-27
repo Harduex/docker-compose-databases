@@ -1,0 +1,24 @@
+version: '3'
+services:
+    mongodb:
+        image: 'mongo:5.0'
+        ports:
+            - '${FORWARD_DB_PORT:-27017}:27017'
+        environment:
+            MONGO_INITDB_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MONGO_INITDB_DATABASE: '${DB_DATABASE}'
+            MONGO_INITDB_ROOT_USERNAME: '${DB_USERNAME}'
+        volumes:
+            - 'mongodb-v1:/data/db'
+        networks:
+            - mongodb-n1
+        healthcheck:
+            test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')", "-u", "${DB_USERNAME}", "-p", "${DB_PASSWORD}" ]
+            retries: 3
+            timeout: 5s
+networks:
+    mongodb-n1:
+        driver: bridge
+volumes:
+    mongodb-v1:
+        driver: local
