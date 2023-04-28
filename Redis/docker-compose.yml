@@ -1,0 +1,21 @@
+version: '3'
+services:
+    redis:
+        image: 'redis:6.2'
+        ports:
+            - '${DB_PORT:-6379}:6379'
+        command: ["redis-server", "--requirepass", "${DB_PASSWORD}"]
+        volumes:
+            - 'redis-v1:/data'
+        networks:
+            - redis-n1
+        healthcheck:
+            test: [ "CMD", "redis-cli", "-a", "${DB_PASSWORD}", "ping" ]
+            retries: 3
+            timeout: 5s
+networks:
+    redis-n1:
+        driver: bridge
+volumes:
+    redis-v1:
+        driver: local
