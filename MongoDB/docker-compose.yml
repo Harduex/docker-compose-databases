@@ -13,7 +13,7 @@ services:
         networks:
             - mongodb-n1
         healthcheck:
-            test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')", "-u", "${DB_USERNAME}", "-p", "${DB_PASSWORD}" ]
+            test: [ "CMD", "mongo", "--eval", "db.runCommand('ping')", "-u", "${DB_USERNAME}", "-p", "${DB_PASSWORD}" ]
             retries: 3
             timeout: 5s
 networks:
