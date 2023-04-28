@@ -3,7 +3,7 @@ services:
     mongodb:
         image: 'mongo:5.0'
         ports:
-            - '${FORWARD_DB_PORT:-27017}:27017'
+            - '${DB_PORT:-27017}:27017'
         environment:
             MONGO_INITDB_ROOT_PASSWORD: '${DB_PASSWORD}'
             MONGO_INITDB_DATABASE: '${DB_DATABASE}'
